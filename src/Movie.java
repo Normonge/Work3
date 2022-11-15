@@ -1,17 +1,14 @@
  import java.util.*;
 public class Movie{
 
-
     private String name;
 
-    private String details;
+    private Details detail;
 
-
-    public Movie(String name, String details) {
+    public Movie(String name, Details detail) {
         this.name = name;
-        this.details = details;
+        this.detail = detail;
     }
-
 
     public String getName() {
         return name;
@@ -21,11 +18,11 @@ public class Movie{
         this.name = name;
     }
 
-    public String getDetails() {
-        return details;
+    public Details getDetail() {
+        return detail;
     }
 
-    public void setDetails(String details) {
-        this.details = details;
+    public void setDetail(Details detail) {
+        this.detail = detail;
     }
 }
