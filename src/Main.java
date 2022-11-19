@@ -26,6 +26,19 @@ public class Main implements MoviesProject {
 
     }
 
+    public void printOptions() {
+        System.out.println("1. Find a movie");
+        System.out.println("2. Add a movie");
+        System.out.println("3. Remove a movie");
+        System.out.println("4. Print all movies");
+        System.out.println("5. Get load factor");
+        System.out.println("6. Get Max Load Factor");
+        System.out.println("7. Count the number of movies");
+        System.out.println("8. Who");
+        System.out.println("9. Help");
+        System.out.println("10. Exit");
+    }
+
     @Override
     public String find(String movie) {
         return moviesMap.containsKey(movie) ?  movie + " " + moviesMap.get(movie).returnAllDetails() : "Movie not found";
