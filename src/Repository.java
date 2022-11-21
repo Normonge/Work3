@@ -35,15 +35,7 @@ public class Repository {
     return moviesMap;
   }
 
-  public void quadraticProbing(String key, Details value){
-    int index = key.hashCode() % moviesMap.size();
-    int i = 1;
-    while(moviesMap.containsKey(key)){
-      index = (index + (i*i)) % moviesMap.size();
-      i++;
-    }
-    moviesMap.put(key, value);
-  }
+
 
 
 

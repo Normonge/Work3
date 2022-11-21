@@ -23,6 +23,6 @@ public class Details {
     }
 
     public String returnAllDetails(){
-        return "Genre: " + genre + " Year: " + year + " Director: " + director;
+        return " | " + genre + " | " + year + " | " + director;
     }
 }

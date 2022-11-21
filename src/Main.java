@@ -11,18 +11,16 @@ public class Main implements MoviesProject {
     final Double THRESHOLD = 0.75;
     Double loadFactor = 0.0;
 
-
     public static void main(String[] args) throws IOException {
         Main ex = new Main();
 
         Repository repository = new Repository();
         moviesMap = repository.createMusicArrayList();
 
-        System.out.println(ex.add("chicken", new String[]{"chicken", "chicken", "chicken"}));
-
         //loop printOptions until user enters 10
-        int option = 0;
+        moviesMap = ex.quadraticProbing(moviesMap);
 
+        int option = 0;
 
         while(option != 10){
             ex.printOptions();
@@ -30,7 +28,21 @@ public class Main implements MoviesProject {
             option = scanner.nextInt();
             ex.optionChosen(option);
         }
+    }
 
+    public HashMap<String, Details> quadraticProbing(HashMap<String,Details> moviesMap){
+        HashMap<String,Details> newMap = new HashMap<>();
+        for(Map.Entry<String, Details> entry : moviesMap.entrySet()){
+            String key = entry.getKey();
+            Details value = entry.getValue();
+            int i = 0;
+            while(newMap.containsKey(key)){
+                i++;
+                key = key + i;
+            }
+            newMap.put(key, value);
+        }
+        return newMap;
     }
 
     public void printOptions() {
@@ -121,7 +133,7 @@ public class Main implements MoviesProject {
     @Override
     public void printHT() {
         for (Map.Entry<String, Details> entry : moviesMap.entrySet()) {
-            System.out.println(entry.getKey() + " " + entry.getValue().returnAllDetails());
+            System.out.println(entry.getKey() + entry.getValue().returnAllDetails());
         }
     }
 
@@ -149,16 +161,26 @@ public class Main implements MoviesProject {
 
     @Override
     public void who() {
-
+        System.out.println("Name: " + "Adeleke Oluwaseun");
+        System.out.println("Student Number: " + "C17335831");
     }
 
     @Override
     public void help() {
-
+        System.out.println("1. Find a movie - Enter the name of the movie you want to find");
+        System.out.println("2. Add a movie - Enter the name of the movie you want to add");
+        System.out.println("3. Remove a movie - Enter the name of the movie you want to remove");
+        System.out.println("4. Print all movies - Prints all movies in the hash table");
+        System.out.println("5. Get load factor - Prints the load factor");
+        System.out.println("6. Get Max Load Factor - Prints the max load factor");
+        System.out.println("7. Count the number of movies - Prints the number of movies in the hash table");
+        System.out.println("8. Who - Prints the name of the person who wrote the program");
+        System.out.println("9. Help - Prints the help menu");
+        System.out.println("10. Exit - Exits the program");
     }
 
     @Override
     public void exit() {
-
+        System.exit(0);
     }
 }
