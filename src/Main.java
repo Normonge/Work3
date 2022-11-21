@@ -1,4 +1,3 @@
-import javax.swing.text.html.parser.Entity;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -6,30 +5,32 @@ import java.util.Scanner;
 
 public class Main implements MoviesProject {
 
-    private static Map<String,Details> moviesMap;
+    private static HashMap<String,Details> moviesMap = new HashMap<>();
+
+    Double max = 16.0;
+    final Double THRESHOLD = 0.75;
+    Double loadFactor = 0.0;
 
 
     public static void main(String[] args) throws IOException {
         Main ex = new Main();
 
-
         Repository repository = new Repository();
         moviesMap = repository.createMusicArrayList();
 
-        for (Map.Entry<String, Details> entry : moviesMap.entrySet()) {
-            System.out.println(entry.getKey() + " " + entry.getValue().returnAllDetails());
+        System.out.println(ex.add("chicken", new String[]{"chicken", "chicken", "chicken"}));
+
+        //loop printOptions until user enters 10
+        int option = 0;
+
+
+        while(option != 10){
+            ex.printOptions();
+            Scanner scanner = new Scanner(System.in);
+            option = scanner.nextInt();
+            ex.optionChosen(option);
         }
 
-        System.out.println(ex.find("Bridget Jones's Diary"));
-        System.out.println(ex.add("chicken", new String[]{"chicken", "chicken", "chicken"}));
-        System.out.println(ex.getLoadFactor());
-        System.out.println(ex.find("chicken"));
-
-
-        ex.printOptions();
-        Scanner scanner = new Scanner(System.in);
-        int option = scanner.nextInt();
-        ex.optionChosen(option);
     }
 
     public void printOptions() {
@@ -43,31 +44,36 @@ public class Main implements MoviesProject {
         System.out.println("8. Who");
         System.out.println("9. Help");
         System.out.println("10. Exit");
-
     }
 
     public void optionChosen(int option){
+        String movieName;
         switch (option){
             case 1:
                 System.out.println("Enter the name of the movie you want to find");
                 Scanner scanner = new Scanner(System.in);
-                String movieName = scanner.nextLine();
+                movieName = scanner.nextLine();
                 System.out.println(find(movieName));
                 break;
             case 2:
                 System.out.println("Enter the name of the movie you want to add");
                 Scanner scanner1 = new Scanner(System.in);
-                String movieName1 = scanner1.nextLine();
-                System.out.println("Enter the details of the movie you want to add");
+                movieName = scanner1.nextLine();
+                System.out.println("Enter the genre: ");
                 Scanner scanner2 = new Scanner(System.in);
-                String movieDetails = scanner2.nextLine();
-                String[] movieDetailsArray = movieDetails.split(",");
-                System.out.println(add(movieName1,movieDetailsArray));
+                String genre = scanner2.nextLine();
+                System.out.println("Enter the year: ");
+                Scanner scanner3 = new Scanner(System.in);
+                String year = scanner3.nextLine();
+                System.out.println("Enter the director: ");
+                Scanner scanner4 = new Scanner(System.in);
+                String director = scanner4.nextLine();
+                System.out.println(add(movieName, new String[]{genre, year, director}));
                 break;
             case 3:
                 System.out.println("Enter the name of the movie you want to remove");
-                Scanner scanner3 = new Scanner(System.in);
-                String movieName2 = scanner3.nextLine();
+                Scanner scanner5 = new Scanner(System.in);
+                String movieName2 = scanner5.nextLine();
                 System.out.println(delete(movieName2));
                 break;
             case 4:
@@ -120,13 +126,20 @@ public class Main implements MoviesProject {
     }
 
     @Override
-    public double getLoadFactor() {
-        return moviesMap.size() / 1000.0;
+    public Double getLoadFactor() {
+        loadFactor = (moviesMap.size() / max);
+
+        if (loadFactor > THRESHOLD) {
+            max = max * 2;
+            getLoadFactor();
+        }
+        return loadFactor;
     }
 
     @Override
     public double getMaxLoadFactor() {
-        return moviesMap.size() / moviesMap.keySet().size();
+        //get max load factor
+        return THRESHOLD;
     }
 
     @Override

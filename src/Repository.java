@@ -7,11 +7,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 public class Repository {
   //read top10s_1.csv
-
-  public Map<String, Details> createMusicArrayList() throws IOException {
-    StringBuilder fileContents = new StringBuilder();
+  HashMap<String, Details> moviesMap = new HashMap<>();
+  public HashMap<String, Details> createMusicArrayList() throws IOException {
     File file = new File("movies.csv");
-    Map<String, Details> moviesMap = new HashMap<>();
+
     try (BufferedReader reader = new BufferedReader(new FileReader(file, StandardCharsets.UTF_8))) {
       String line;
       line = reader.readLine();
@@ -27,6 +26,7 @@ public class Repository {
                 line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)")[3]
         );
         String title = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)")[0];
+
         moviesMap.put(title, details);
       }
 
@@ -34,5 +34,18 @@ public class Repository {
 
     return moviesMap;
   }
+
+  public void quadraticProbing(String key, Details value){
+    int index = key.hashCode() % moviesMap.size();
+    int i = 1;
+    while(moviesMap.containsKey(key)){
+      index = (index + (i*i)) % moviesMap.size();
+      i++;
+    }
+    moviesMap.put(key, value);
+  }
+
+
+
 
 }

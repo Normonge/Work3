@@ -29,9 +29,9 @@ public interface MoviesProject {
     /**
      * How full is this table?  Count how many entries you have and divide by the
      size of the table.
-     * @return count / size
+     * @return
      */
-    double getLoadFactor();
+    Double getLoadFactor();
     /**
      * How full can this table be?
      * @return maximum load factor
